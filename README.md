@@ -55,6 +55,11 @@ __Server:__
 __Client:__
  A UDP client for the Server class.
 
+###taskmanager
+
+__TaskManager:__
+ A synchronous TaskManager.
+
 ##Execution
 
 In order to execute and test this project, you should do the following:
