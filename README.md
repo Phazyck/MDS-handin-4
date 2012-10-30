@@ -9,46 +9,29 @@
 __Here's some suggestions on how to proceed.__
 
 ###Candidate Classes
- * An abstract super class, UdpEntity, for both UdpManagerClient and UdpManagerServer, implementing common UDP functionality?
- * A class AsyncManager, that manages tasks asynchronously.
+ * __public abstract class UdpEntity__ - A super classs for both UdpManagerClient and UdpManagerServer, implementing common UDP functionality.
+ * __public class AsyncManager__ - A dedicated asynchronous TaskManager.
 
 ###Candidate Methods
- * UdpEntity - void send(String request) - sends a request to the server through UDP.
- * UdPEntity - String receive() - receives and returns a request from the client through UDP.
+ * __UdpEntity__
+   * __public void send(String x)__ - sends a string using UDP.
+   * __public String receive()__ - receives a string using UDP.
 
 ##Package Overview
 
 __An overview off all the packages and the classes inside:__
 
-###serialization
-
-__Serializer:__
- This class is capable of serializing/deserializing any class in serialization.common.
-
-###serialization.common
-
-__Cal, Users, User, Tasks, Task:__
- These classes are used to represent XML-data, and can be serialized/deserialized to/from XML.
-
-
-###taskmanager
-
-__TaskManager:__
- An interface for all TaskManagers.
-
-__FileManager:__
- A TaskManager which manages and stores its content on a local XML-file.
-
-__UdpManagerClient:__
- A TaskManager which manages its contents remotely through UDP.
-
-__UdpManagerServer:__
- A UDP server which provides functionality to multiple UdpManagerClients, through UDP.
-
-###test
-
-__Console:__
-  A TaskManager tester which, in the console, guides a user through task execution and more.
+ * __serialization__
+   * __Serializer:__ This class is capable of serializing/deserializing any class in serialization.common.
+ * __serialization.common__
+   * __Cal, Users, User, Tasks, Task:__ These classes are used to represent XML-data, and can be serialized/deserialized to/from XML.
+ * __taskmanager__
+   * __TaskManager:__ An interface for all TaskManagers.
+   * __FileManager:__ A TaskManager which manages and stores its content on a local XML-file. 
+   * __UdpManagerClient:__ A TaskManager which manages its contents remotely through UDP. 
+   * __UdpManagerServer:__ A UDP server which provides functionality to multiple UdpManagerClients, through UDP. 
+ * __test__
+   * __Console:__ A TaskManager tester which, in the console, guides a user through task execution and more.
 
 ##Execution
 
