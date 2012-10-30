@@ -2,30 +2,23 @@
 
 ##Project Overview
 
-###TODO
-####Test cases - Describe test cases:
- * Submit, fail, resubmit and pass a hand-in.
-   1. Execute "handin-01".
-   2. Execute "review-01".
-   3. Execute "reject-01".
-   4. Execute "handin-01".
-   5. Execute "review-01".
-   6. Execute "approve-01".
-   7. Execute "qualify-for-exam".
- * Try to produce a deadlock.
-   1. I dunno...
- * Execute a review before handing in.
-   1. Execute "review-01".
+###Not yet ready!
 
-####Candidate classes - Define possibly missing classes:
+##Suggestions
+
+__Here's some suggestions on how to proceed.__
+
+###Candidate Classes
  * An abstract super class, UdpEntity, for both UdpManagerClient and UdpManagerServer, implementing common UDP functionality?
  * A class AsyncManager, that manages tasks asynchronously.
 
-####Candidate methods - Define interfaces for a class:
+###Candidate Methods
  * UdpEntity - void send(String request) - sends a request to the server through UDP.
  * UdPEntity - String receive() - receives and returns a request from the client through UDP.
 
 ##Package Overview
+
+__And overview off all the packages and the classes inside:__
 
 ###serialization
 
@@ -59,11 +52,28 @@ __Console:__
 
 ##Execution
 
-In order to execute and test this project, you should do the following:
+__In order to execute and test this project, you should do the following:__
 
 1. If testing out UdpClient, run a single instance of UdpServer.java.
 2. Run one or more instances of Console.java.
 3. Follow the instructions in the console.
 
-##Example Test Runs
+##Test Cases
+
+__Here are some different test cases, and the console input needed to try them out:__
+
+ * Submit, review, reject, resubmit, review, pass and then qualify hand-in.
+   * {execute, handin-01, execute, review-01, execute, reject-01, execute, handin-01, execute, review-01, execute, approve-01, execute, qualify-for-exam}
+ * Attempt to produce a deadlock.
+   * I dunno...
+ * Attempt to execute a review before handing in.
+   * {execute, review-01}
+ * Show all details about handin-01
+   * {display, handin-01}
+ * Show all users
+   * {users}
+ * Show all tasks attended by Rao.
+   * {tasks, rao}
+
+##Example Console Dumps
 ###Not yet ready!
