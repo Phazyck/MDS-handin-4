@@ -6,16 +6,13 @@
 
 ##Suggestions
 
-__Here's some suggestions on how to proceed.__
+__Here's some suggestions on additional classes/methods.__
 
-###Candidate Classes
- * __public abstract class UdpEntity__ - A super classs for both UdpManagerClient and UdpManagerServer, implementing common UDP functionality.
- * __public class AsyncManager__ - A dedicated asynchronous TaskManager.
 
-###Candidate Methods
- * __UdpEntity__
+ * __public abstract class UdpEntity__ - A super classs for anything UDP, implementing common UDP functionality.
    * __public void send(String x)__ - sends a string using UDP.
    * __public String receive()__ - receives a string using UDP.
+ * __public class AsyncManager implements TaskManager__ - A dedicated asynchronous TaskManager.
 
 ##Package Overview
 
