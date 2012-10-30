@@ -18,7 +18,7 @@ __Here's some suggestions on how to proceed.__
 
 ##Package Overview
 
-__And overview off all the packages and the classes inside:__
+__An overview off all the packages and the classes inside:__
 
 ###serialization
 
