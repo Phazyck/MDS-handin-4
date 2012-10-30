@@ -3,7 +3,7 @@ package serialization;
 import java.io.*;
 import javax.xml.bind.*;
 
-public class Serializer implements Serializable {
+public class Serializer {
 
     public static <T extends Serializable> String serialize(T serializable) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(serializable.getClass());

@@ -1,7 +1,5 @@
 package serialization.common;
 
-import serialization.Serializer;
-
-public class User extends Serializer {
-    
+public class User {
+    public String name;
 }
