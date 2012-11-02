@@ -19,12 +19,13 @@ __Here's some suggestions on additional classes/methods.__
 __An overview off all the packages and the classes inside:__
 
  * __serialization__
-   * __Serializer:__ This class is capable of serializing/deserializing any class in serialization.common.
- * __serialization.common__
    * __Cal, Users, User, Tasks, Task:__ These classes are used to represent XML-data, and can be serialized/deserialized to/from XML.
+ * __serialization.util__
+   * __Serializer:__ This class is capable of serializing/deserializing any class in the serialization package.
  * __taskmanager__
    * __TaskManager:__ An interface for all TaskManagers.
    * __FileManager:__ A TaskManager which manages and stores its content on a local XML-file. 
+ * __taskmanager.net.udp__ 
    * __UdpManagerClient:__ A TaskManager which manages its contents remotely through UDP. 
    * __UdpManagerServer:__ A UDP server which provides functionality to multiple UdpManagerClients, through UDP. 
  * __test__
