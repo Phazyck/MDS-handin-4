@@ -1,5 +1,3 @@
-##OBS: Major updates to the project have yet to be committed. I committed them locally on my desktop and then forgot to push them before leaving town. They'll be up on when I'm back home on Sunday. -Oliver
-
 #Hand-in 4 - Synchronization and Concurrency Control
 
 ##Project Overview
