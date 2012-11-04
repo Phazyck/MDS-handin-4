@@ -1,6 +1,6 @@
 package taskmanager;
 
-import serialization.common.*;
+import serialization.*;
 
 public interface TaskManager {
 

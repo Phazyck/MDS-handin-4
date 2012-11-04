@@ -1,11 +1,9 @@
-package test;
+package ui;
 
 import java.io.*;
 import java.util.concurrent.*;
-import serialization.common.*;
-import taskmanager.FileManager;
-import taskmanager.TaskManager;
-import taskmanager.udp.UdpManagerClient;
+import serialization.*;
+import taskmanager.*;
 
 /**
  * Provides interaction with a TaskManager through the terminal.
@@ -13,7 +11,7 @@ import taskmanager.udp.UdpManagerClient;
 public class Console implements Runnable {
 
     BufferedReader input;
-    TaskManager taskManager = new FileManager();
+    TaskManager taskManager;
 
     /**
      * Initializes the console with a little help from the user.
@@ -22,14 +20,14 @@ public class Console implements Runnable {
         input = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
             out("Which kind of TaskManager would you like to test?");
-            out(" - [File]Manager");
-            out(" - [Udp]Manager");
+            out(" - [local]Manager");
+            out(" - [remote]Manager");
             switch (in().toLowerCase()) {
-                case "file":
-                    taskManager = new FileManager();
+                case "local":
+                    // TODO - Set up local manager.                    
                     return;
-                case "udp":
-                    taskManager = new UdpManagerClient();
+                case "remote":
+                    // TODO - Set up remote manager.
                     return;
                 default:
                     wrongInput();
@@ -100,7 +98,7 @@ public class Console implements Runnable {
         String attendantId = in();
         Tasks tasks = taskManager.getAttendantTasks(attendantId);
 
-        if (tasks.isEmpty()) {
+        if (tasks.size() == 0) {
             out(attendantId + " isn't attending any tasks.");
         } else {
             for (Task t : tasks) {
