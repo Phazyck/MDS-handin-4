@@ -1,13 +1,8 @@
 package taskmanager.local;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
+import javax.xml.bind.*;
 import serialization.*;
 import taskmanager.TaskManager;
 
@@ -38,8 +33,8 @@ public class LocalManager implements TaskManager {
             streamIn = new FileInputStream(path);
             streamOut = new FileOutputStream(path);
             cal = readCal();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException | JAXBException ex) {
+            System.out.println(ex);
             cal = new Cal();
         }
     }
@@ -58,19 +53,28 @@ public class LocalManager implements TaskManager {
     @Override
     public boolean executeTask(String taskId) {
         Task task = getTask(taskId);
-        for(String s : task.conditionsAsList()){
-            if(!getTask(s).isExecuted() || getTask(s).isRequired()){
+        
+        //If the task's conditions aren't executed or some conditions still are required we don't do anything.
+        //If the conditions are executed and no are required, we set the task as executed and not required. 
+        for(String c : task.conditionsAsList()){
+            if(!getTask(c).isExecuted() || getTask(c).isRequired()){
                 return false;
             } else{
-                task.status = "executed";
-                task.required = "false";
+                task.setExecuted(true);
+                task.setRequired(false);
             }
-        }         
-              
+        }
+        
+        //We set the response tasks as required
+        for(String r : task.responsesAsList()){
+            getTask(r).setRequired(true);
+        }
+        
+        //Save
         try {        
             writeCal();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (JAXBException | FileNotFoundException ex) {
+            System.out.println(ex);
         }
         
         return true;
