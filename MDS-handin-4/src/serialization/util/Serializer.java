@@ -33,7 +33,7 @@ public class Serializer {
      * @param xml The XML representation of the serializable.
      * @param target The target class which the XML should be serialized into.
      * @return The deSerialized serializable.
-     * @throws JAXBException if an error ocurred during deSerialization, e.g. if
+     * @throws JAXBException if an error occurred during deSerialization, e.g. if
      * the XML is faulty, or the target is unknown.
      */
     public static <T extends Serializable> T deSerialize(String xml, Class<T> target) throws JAXBException {

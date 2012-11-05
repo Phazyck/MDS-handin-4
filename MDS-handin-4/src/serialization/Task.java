@@ -1,6 +1,7 @@
 package serialization;
 
 import java.io.Serializable;
+import java.util.*;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.*;
 
@@ -90,6 +91,10 @@ public class Task implements Serializable {
     public boolean isExecuted() {
         return status.equalsIgnoreCase("executed") ? true : false;
     }
+    
+    public void setExecuted(boolean executed) {
+        status = executed ? "executed" : "not-executed";
+    }
     /**
      * The task status, (executed|not-excecuted).
      */
@@ -105,6 +110,10 @@ public class Task implements Serializable {
     public boolean isRequired() {
         return required.equalsIgnoreCase("true") ? true : false;
     }
+    
+    public void setRequired(boolean required) {
+        this.required = "" + required;
+    }
     /**
      * Describes whether the task is required. (true|false).
      */
@@ -118,12 +127,12 @@ public class Task implements Serializable {
     public String description;
 
     /**
-     * Splits up the attendants string into an attendant string array.
+     * Splits up the attendants string into an attendant string list.
      *
-     * @return A string array containing attendant IDs.
+     * @return A string list containing attendant IDs.
      */
-    public String[] attendantsToArray() {
-        return attendants.split(", ");
+    public List<String> attendantsAsList() {
+        return Arrays.asList(attendants.split(", "));
 
     }
     /**
@@ -134,12 +143,12 @@ public class Task implements Serializable {
     public String attendants;
 
     /**
-     * Split up the conditions string into a condition string array.
+     * Split up the conditions string into a condition string list.
      *
-     * @return A string array containing condition (task) IDs.
+     * @return A string list containing condition (task) IDs.
      */
-    public String[] conditionsToArray() {
-        return conditions.split(", ");
+    public List<String> conditionsAsList() {
+        return Arrays.asList(conditions.split(", "));
     }
     /**
      * IDs of all condition tasks, (format: id1, id2, ..., idn).
@@ -148,12 +157,12 @@ public class Task implements Serializable {
     public String conditions;
 
     /**
-     * Split up the responses string into a response string array.
+     * Split up the responses string into a response string list.
      *
-     * @return A string array containing response (task) IDs.
+     * @return A string list containing response (task) IDs.
      */
-    public String[] responsesToArray() {
-        return conditions.split(", ");
+    public List<String> responsesAsList() {
+        return Arrays.asList(responses.split(", "));
     }
     /**
      * IDs of all repsonse tasks, (format: id1, id2, ..., idn).
