@@ -26,12 +26,6 @@ __Here's a list of what still needs to be implemented:__
    * Must contain a Receiver.
      * Must be able to use this receiver to listen for requests.
        * Must be able to translate these requests, forward them to the TaskManager, and send back the result to the source.
-
- * Oliver -> __ClientConsole:__ 
-   * Might need to be updated in order to provide a guided setup of the environment, e.g. choosing the protocol through which a RemoteManager should communicate.
- * [OPTTIONAL] ??? -> __ServerConsole:__ 
-   * May make a console interface for setting up the server.
-   * Could allow gently shutting down the server, e.g. by telling it to [exit].
  
 ##Package Overview
 
