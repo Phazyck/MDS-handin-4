@@ -1,4 +1,3 @@
-
 package taskmanager.local;
 
 import serialization.Task;
@@ -6,8 +5,27 @@ import serialization.Tasks;
 import serialization.Users;
 import taskmanager.TaskManager;
 
-
+/**
+ * A TaskManager which manages its content locally in an asynchronous manner.
+ */
 public class LocalManager implements TaskManager {
+
+    /**
+     * TODO
+     */
+    public LocalManager() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * TODO
+     *
+     * @param threadLimit A limit on how many requests should be handled
+     * asynchronously.
+     */
+    public LocalManager(int threadLimit) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
     @Override
     public boolean executeTask(String taskId) {
@@ -28,5 +46,4 @@ public class LocalManager implements TaskManager {
     public Task getTask(String taskId) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
 }

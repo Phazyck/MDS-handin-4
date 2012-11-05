@@ -2,10 +2,13 @@ package taskmanager;
 
 import serialization.*;
 
+/**
+ * An interface which defines what features a TaskManager must provide.
+ */
 public interface TaskManager {
 
     /**
-     * Executes a task.
+     * Execute a given task.
      *
      * @param taskId The id of the task to be executed.
      * @return true if the task was executed, false if not.
@@ -19,6 +22,7 @@ public interface TaskManager {
 
     /**
      * Gets all tasks attended by a certain user.
+     *
      * @param attendantId The id of the user.
      * @return The attendants tasks.
      */
@@ -26,6 +30,7 @@ public interface TaskManager {
 
     /**
      * Gets a specific task.
+     *
      * @param taskId The id of the task.
      * @return The task.
      */

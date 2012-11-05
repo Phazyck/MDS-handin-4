@@ -4,7 +4,10 @@ import java.io.*;
 import java.net.*;
 import remote.Receiver;
 
-public class UdpReceiver implements Receiver {
+/**
+ * A receiver which receives Strings through UDP.
+ */
+public class UdpStringReceiver implements Receiver<String> {
 
     private DatagramSocket socket;
     private byte[] buffer;
@@ -15,7 +18,7 @@ public class UdpReceiver implements Receiver {
      * @throws SocketException if the socket could not be opened, or the socket
      * could not bind to the specified local port.
      */
-    public UdpReceiver() throws SocketException {
+    public UdpStringReceiver() throws SocketException {
         this(4445, 256);
     }
 
@@ -27,11 +30,16 @@ public class UdpReceiver implements Receiver {
      * @throws SocketException if the socket could not be opened, or the socket
      * could not bind to the specified local port.
      */
-    public UdpReceiver(int port, int bufferLength) throws SocketException {
+    public UdpStringReceiver(int port, int bufferLength) throws SocketException {
         socket = new DatagramSocket(port);
         buffer = new byte[bufferLength];
     }
 
+    /**
+     * Receive a string from a transmitter.
+     *
+     * @return The string.
+     */
     @Override
     public String receive() {
         DatagramPacket packet = new DatagramPacket(buffer, buffer.length);

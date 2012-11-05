@@ -3,14 +3,17 @@ package remote.udp;
 import java.net.*;
 import remote.Transceiver;
 
-public class UdpTransceiver implements Transceiver {
+/**
+ * A transceiver which sends/receives Strings through UDP.
+ */
+public class UdpStringTransceiver implements Transceiver<String,String> {
 
     /**
      * Try out the transceiver (and thus also the transmitter and receiver).
      */
     public static void main(String[] args) throws UnknownHostException, SocketException {        
-        UdpTransceiver a = new UdpTransceiver(null, new UdpTransmitter("localhost", 4444));
-        UdpTransceiver b = new UdpTransceiver(new UdpReceiver(4444, 256), null);
+        UdpStringTransceiver a = new UdpStringTransceiver(null, new UdpStringTransmitter("localhost", 4444));
+        UdpStringTransceiver b = new UdpStringTransceiver(new UdpStringReceiver(4444, 256), null);
         String msgA = "Hello world!";
         System.out.println("A->B : " + msgA);
         a.transmit(msgA);                
@@ -20,8 +23,8 @@ public class UdpTransceiver implements Transceiver {
         b.transmit(msgB);
         System.out.println("A<-B : " + a.receive());
     }
-    private UdpReceiver in;
-    private UdpTransmitter out;
+    private UdpStringReceiver in;
+    private UdpStringTransmitter out;
 
     /**
      * Constructs a UdpTransceiver by putting together a UdpReceiver and a
@@ -35,9 +38,9 @@ public class UdpTransceiver implements Transceiver {
      * @throws UnknownHostException
      * @throws SocketException
      */
-    public UdpTransceiver(UdpReceiver in, UdpTransmitter out) throws SocketException, UnknownHostException {
-        this.in = in == null ? new UdpReceiver() : in;
-        this.out = out == null ? new UdpTransmitter() : out;
+    public UdpStringTransceiver(UdpStringReceiver in, UdpStringTransmitter out) throws SocketException, UnknownHostException {
+        this.in = in == null ? new UdpStringReceiver() : in;
+        this.out = out == null ? new UdpStringTransmitter() : out;
     }
 
     /**
@@ -50,8 +53,8 @@ public class UdpTransceiver implements Transceiver {
      * @throws UnknownHostException
      * @throws SocketException
      */
-    public UdpTransceiver(int in, int bufferLength, String host, int out) throws UnknownHostException, SocketException {
-        this(new UdpReceiver(in, bufferLength), new UdpTransmitter(host, out));
+    public UdpStringTransceiver(int in, int bufferLength, String host, int out) throws UnknownHostException, SocketException {
+        this(new UdpStringReceiver(in, bufferLength), new UdpStringTransmitter(host, out));
     }
 
     @Override

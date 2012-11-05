@@ -5,10 +5,9 @@ import java.net.*;
 import remote.Transmitter;
 
 /**
- * An object which actively transmits messages to receivers through the User
- * Datagram Protocol.
+ * A transmitter which sends Strings through UDP.
  */
-public class UdpTransmitter implements Transmitter {
+public class UdpStringTransmitter implements Transmitter<String> {
 
     private DatagramSocket socket;
     private InetAddress address;
@@ -22,7 +21,7 @@ public class UdpTransmitter implements Transmitter {
      * @throws SocketException if the socket could not be opened, or the socket
      * could not bind to the specified local port.
      */
-    public UdpTransmitter() throws UnknownHostException, SocketException {
+    public UdpStringTransmitter() throws UnknownHostException, SocketException {
         this("localhost", 4445);
     }
 
@@ -36,7 +35,7 @@ public class UdpTransmitter implements Transmitter {
      * @throws SocketException if the socket could not be opened, or the socket
      * could not bind to the specified local port.
      */
-    public UdpTransmitter(String host, int port) throws UnknownHostException, SocketException {
+    public UdpStringTransmitter(String host, int port) throws UnknownHostException, SocketException {
         this(new DatagramPacket(new byte[256], 256, InetAddress.getByName(host), port));
     }
 
@@ -47,12 +46,17 @@ public class UdpTransmitter implements Transmitter {
      * @throws SocketException if the socket could not be opened, or the socket
      * could not bind to the specified local port.
      */
-    public UdpTransmitter(DatagramPacket packet) throws SocketException {
+    public UdpStringTransmitter(DatagramPacket packet) throws SocketException {
         this.socket = new DatagramSocket();
         this.address = packet.getAddress();
         this.port = packet.getPort();
     }
 
+    /**
+     * Transmit an string to a receiver.
+     *
+     * @param message The message.
+     */
     @Override
     public void transmit(String message) {
         byte[] buffer = message.getBytes();

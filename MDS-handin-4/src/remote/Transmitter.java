@@ -1,12 +1,17 @@
 package remote;
 
 /**
- * An interface for an object which actively transmits messages to receivers.
+ * An interface for an object which actively sends objects to corresponding
+ * receivers.
+ *
+ * @param <O> The type of the objects which will be sent.
  */
-public interface Transmitter {
+public interface Transmitter<O> {
+
     /**
-     * Transmit a message to a receiver.
-     * @param message The message.
+     * Transmit an object to a receiver.
+     *
+     * @param object The object.
      */
-    public void transmit(String message);
+    public void transmit(O object);
 }
