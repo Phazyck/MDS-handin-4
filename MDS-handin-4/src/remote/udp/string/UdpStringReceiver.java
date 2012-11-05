@@ -1,8 +1,11 @@
-package remote.udp;
+package remote.udp.string;
 
 import java.io.*;
 import java.net.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import remote.Receiver;
+import remote.Transmitter;
 
 /**
  * A receiver which receives Strings through UDP.
@@ -11,6 +14,7 @@ public class UdpStringReceiver implements Receiver<String> {
 
     private DatagramSocket socket;
     private byte[] buffer;
+    private DatagramPacket latest;
 
     /**
      * Constructs a UdpReceiver with port = 4445 and bufferLength = 256.
@@ -42,12 +46,22 @@ public class UdpStringReceiver implements Receiver<String> {
      */
     @Override
     public String receive() {
-        DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+        latest = new DatagramPacket(buffer, buffer.length);
         try {
-            socket.receive(packet);
+            socket.receive(latest);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        return new String(packet.getData(), 0, packet.getLength());
+        return new String(latest.getData(), 0, latest.getLength());
+    }  
+
+    @Override
+    public Transmitter<String> getTransmitter() {
+        try {
+            return new UdpStringTransmitter(latest);
+        } catch (SocketException ex) {
+            System.out.println(ex);
+            return null;
+        }
     }
 }

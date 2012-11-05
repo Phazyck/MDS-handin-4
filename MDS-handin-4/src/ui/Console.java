@@ -1,9 +1,13 @@
 package ui;
 
 import java.io.*;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.concurrent.*;
 import serialization.*;
 import taskmanager.*;
+import taskmanager.local.LocalManager;
+import taskmanager.remote.RemoteManager;
 
 /**
  * Provides interaction with a TaskManager through the terminal.
@@ -11,12 +15,12 @@ import taskmanager.*;
 public class Console implements Runnable {
 
     BufferedReader input;
-    TaskManager taskManager;
+    TaskManager manager;
 
     /**
      * Initializes the console with a little help from the user.
      */
-    public Console() {
+    public Console() throws UnknownHostException, SocketException {
         input = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
             out("Which kind of TaskManager would you like to test?");
@@ -24,10 +28,10 @@ public class Console implements Runnable {
             out(" - [remote]Manager");
             switch (in().toLowerCase()) {
                 case "local":
-                    // TODO - Set up local manager.                    
+                    manager = new LocalManager();
                     return;
                 case "remote":
-                    // TODO - Set up remote manager.
+                    manager = new RemoteManager();
                     return;
                 default:
                     wrongInput();
@@ -72,7 +76,7 @@ public class Console implements Runnable {
      */
     private void executeTask() {
         out("What is the id of the task you want to execute?");
-        if(taskManager.executeTask(in())) {
+        if(manager.executeTask(in())) {
             out("Task executed.");
         } else {
             out("Task couldn't be executed.");
@@ -85,7 +89,7 @@ public class Console implements Runnable {
      */
     private void listUsers() {
         out("Listing all users:");
-        for (User u : taskManager.getUsers()) {
+        for (User u : manager.getUsers()) {
             out("  " + u.name);
         }
     }
@@ -96,7 +100,7 @@ public class Console implements Runnable {
     private void listTasks() {
         out("What is the id of the attendant whose tasks you want to list?");
         String attendantId = in();
-        Tasks tasks = taskManager.getAttendantTasks(attendantId);
+        Tasks tasks = manager.getAttendantTasks(attendantId);
 
         if (tasks.size() == 0) {
             out(attendantId + " isn't attending any tasks.");
@@ -113,7 +117,7 @@ public class Console implements Runnable {
     private void displayTask() {
         out("What is the id of the task you want to display?");
 
-        Task task = taskManager.getTask(in());
+        Task task = manager.getTask(in());
 
         if (task != null) {
             out("Displaying " + task.id + ":");
@@ -180,7 +184,7 @@ public class Console implements Runnable {
      *
      * @param args Not used.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnknownHostException, SocketException {
         ExecutorService exec = Executors.newSingleThreadExecutor();
         exec.execute(new Console());
         exec.shutdown();

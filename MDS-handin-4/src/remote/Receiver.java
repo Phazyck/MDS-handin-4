@@ -14,4 +14,10 @@ public interface Receiver<I> {
      * @return The object.
      */
     public I receive();
+    
+    /**
+     * Get a transmitter which transmits to the last source from which a message was received.
+     * @return A Transmitter which can transmit back to the last message source.
+     */
+    public Transmitter<I> getTransmitter();
 }
