@@ -14,17 +14,15 @@ public class LocalManager implements TaskManager {
      * TODO
      */
     public LocalManager() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this("lib\task-manager-revised.xml");
     }
-
+    
     /**
-     * TODO
-     *
-     * @param threadLimit A limit on how many requests should be handled
-     * asynchronously.
+     * Uses a xml from a certain path. 
+     * @param path 
      */
-    public LocalManager(int threadLimit) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public LocalManager(String path){
+        
     }
 
     @Override
