@@ -1,9 +1,11 @@
 package taskmanager.remote;
 
 import java.net.*;
-import remote.Transmitter;
-import remote.udp.UdpStringTransmitter;
+import javax.xml.bind.JAXBException;
+import remote.*;
+import remote.udp.string.UdpStringTransmitter;
 import serialization.*;
+import static serialization.util.Serializer.*;
 import taskmanager.TaskManager;
 
 /**
@@ -35,21 +37,50 @@ public class RemoteManager implements TaskManager {
 
     @Override
     public boolean executeTask(String taskId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String reply = getReply(new Envelope("execute", taskId));
+        return Boolean.getBoolean(reply);
     }
 
     @Override
     public Users getUsers() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            String reply = getReply(new Envelope("users", ""));
+            return deSerialize(reply, Users.class);
+        } catch (JAXBException ex) {
+            System.out.println(ex);
+            return null;
+        }
     }
 
     @Override
     public Tasks getAttendantTasks(String attendantId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            String reply = getReply(new Envelope("tasks", attendantId));
+            return deSerialize(reply, Tasks.class);
+        } catch (JAXBException ex) {
+            System.out.println(ex);
+            return null;
+        }
     }
 
     @Override
     public Task getTask(String taskId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            String reply = getReply(new Envelope("task", taskId));
+            return deSerialize(reply, Task.class);
+        } catch (JAXBException ex) {
+            System.out.println(ex);
+            return null;
+        }
+    }
+
+    private String getReply(Envelope request) {
+        try {
+            out.transmit(serialize(request));
+            Receiver<String> in = out.getReceiver();
+            return in.receive();
+        } catch (JAXBException ex) {
+            return ex.toString();
+        }
     }
 }
