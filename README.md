@@ -33,6 +33,7 @@ __Brief descriptions of all the packages in the project:__
 
 __In order to execute and test this project, you should do the following:__
 
+ * To reset the data, overwrite the 'task-manager-revised.xml' file in 'MDS-handin-4\lib' with the 'task-manager-revised.xml' file in 'MDS-handin-4'.
  * If testing out a RemoteManager with a certain protocol, e.g. UDP, you will need to have a corresponding RemoteManagerHost running, before proceeding.
  * Run one or more instances of Console.java, on one or multiple machines.
  * Follow the instructions in the console.
@@ -43,7 +44,7 @@ __Here are some different test cases, and the console input needed, after the in
 
 1. __Submit, review, reject, resubmit, review, pass and then qualify hand-in:__ In other words, try to go through the whole chain of states in a completely legal and plausible way.
    * {execute, handin-01, execute, review-01, execute, reject-01, execute, handin-01, execute, review-01, execute, approve-01, execute, qualify-for-exam}
-2. __Attempt to produce a deadlock:__ By executing a review before the hand-in is executed, and then execute the hand-in. The review execution might then wait for the hand-in execution to complete, which in turn waits for the review execution to complete, because they might be blocking each other's desired resource.
+2. __Attempt to produce a deadlock:__ By executing a review before the hand-in is executed, and then execute the hand-in. The review execution might then wait for the hand-in execution to complete, which in turn waits for the review execution to complete, because they might be blocking each other's desired resource. This kind of deadlock was demonstrated by Rao. In our implementation, the review should simply be denied, freeing up the resources, and the hand-in can be executed. One can then try again to execute a review, and this time, it should succeed.
    * {execute, review-01, execute, handin-01}
 3. __Attempt to execute a review before handing in:__ In our implementation, this action should abort, since it does not make sense. If letting the execution wait for the handin to be executed, get closer to making the deadlock attempted above, possible. Thus, the review should fail, and you should then manually try again at a later time, when the handin is executed.
    * {execute, review-01}
@@ -53,5 +54,4 @@ __Here are some different test cases, and the console input needed, after the in
    * {users}
 6. __Show all tasks attended by Rao:__ Test out the "tasks" feature.
    * {tasks, rao}
-7. __Attempt to corrupt the data or produce some other kind of error:__ Execute two related tasks at the same time.
-   * {execute, handin-01} - executed at the same time by different sources.
+7. __Attempt to corrupt the data or produce some other kind of error...__ 
