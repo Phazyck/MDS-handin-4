@@ -52,9 +52,12 @@ public class RemoteManagerHost implements Runnable {
      */
     @Override
     public void run() {
+        System.out.println("Ready for requests.\n");
         while (true) {
+            
             try {
-                Envelope envelope = deSerialize(in.receive(), Envelope.class);
+                String request = in.receive();
+                Envelope envelope = deSerialize(request, Envelope.class);
                 Transmitter<String> out = in.getTransmitter();
                 exec.execute(new Action(out, manager, envelope));
             } catch (JAXBException ex) {

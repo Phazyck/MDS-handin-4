@@ -21,7 +21,7 @@ public class UdpStringReceiver implements Receiver<String> {
      * could not bind to the specified local port.
      */
     public UdpStringReceiver() throws SocketException {
-        this(new DatagramSocket(4444));
+        this(new DatagramSocket(4445));
     }
 
     /**
@@ -49,7 +49,7 @@ public class UdpStringReceiver implements Receiver<String> {
             throw new RuntimeException(ex);
         }
         String message = new String(latest.getData(), 0, latest.getLength());
-        System.out.println("Message received: " + message);
+        System.out.println("[<-IN--] " + message);
         return message;
     }  
 

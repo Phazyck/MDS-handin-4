@@ -67,7 +67,7 @@ public class UdpStringTransmitter implements Transmitter<String> {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        System.out.println("Message sent: " + message);
+        System.out.println("[-OUT->] " + message);
     }
 
     @Override
