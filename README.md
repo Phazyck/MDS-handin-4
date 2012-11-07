@@ -1,16 +1,26 @@
 #Hand-in 4 - Synchronization and Concurrency Control
 
-##Project Overview
+##Introduction
 
-###FILLME.TXT
+__Everything you need to know:__
 
-##To-Do
+In this project, we have made some new decisions regarding design, and reused/improved on some old ones.
+Remote communication works via communication modules, allowing to quickly change from udp to tcp, if needed.
+Classes used for serialization have been updated according to the revised .xml-file. Some now have additional helper method, providing more user-friendly ways of manipulating their internal data.
+After some thinking, we have gone back to making a (better) generic Serializer.
+Any class taking on the role of a TaskManager, implements that interface.
+This allows us to switch out TaskManagers as needed, e.g. changing from a local to a remote TaskManager.
+The LocalManager is made safe in a concurrent environment.
+Thus, a RemoteManagerHost holding a LocalManager, will spawn new threads for each request, with thread interacting with the LocalManager and sending back a reply when done.
+For testing purposes, we have decided to make an interactive client console, instead of our previously hard-coded tests.
 
-__Here's a list of what still needs to done:__
+To test the applicaton, see the _Execution_ section, and maybe try out some of the cases in the _Test Cases_ section.
 
- * __Write overview:__ Fill out the project overview.
- * __Produce Test Dumps:__ Perform the tests and post the output in files named 'test_dump_X.txt'.
+There are no refences to other libraries than the standard JDK library.
 
+For each test cases, some text dumps have been organized in the folder named 'test_dumps'.
+
+Enjoy!
  
 ##Package Overview
 
