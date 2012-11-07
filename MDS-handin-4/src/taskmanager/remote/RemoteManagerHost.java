@@ -15,6 +15,10 @@ import taskmanager.local.LocalManager;
  * A host to RemoteManagers content.
  */
 public class RemoteManagerHost implements Runnable {
+    
+    public static void main(String[] args) throws SocketException {
+        Executors.newSingleThreadExecutor().execute(new RemoteManagerHost());
+    }
 
     private TaskManager manager;
     private Receiver<String> in;

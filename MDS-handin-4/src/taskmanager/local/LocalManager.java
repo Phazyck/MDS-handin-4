@@ -3,77 +3,71 @@ package taskmanager.local;
 import concurrent.AutoSave;
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import javax.xml.bind.*;
 import serialization.*;
 import taskmanager.TaskManager;
+import static serialization.util.Serializer.*;
 
 /**
  * A TaskManager which manages its content locally in an asynchronous manner.
  */
 public class LocalManager implements TaskManager {
 
-    private final String path;
-    private Cal cal = new Cal();
-    private FileInputStream in;
-    private Executor exec;
-    
+    private final Cal cal;
 
     /**
      * TODO
      */
     public LocalManager() {
-        this("lib\task-manager-revised.xml");
+        this("./lib/task-manager-revised.xml");
     }
 
     /**
      * Uses a xml from a certain path.
+     *
      * @param path
      */
-    public LocalManager(String p) {
-        path = p;
-        FileOutputStream out = null;
-        try {
-            in = new FileInputStream(path);
-            out = new FileOutputStream(path);            
-            cal = readCal();
-        } catch (FileNotFoundException | JAXBException ex) {
+    public LocalManager(String path) {
+        Cal c = null;
+        try (FileInputStream stream = new FileInputStream(path)) {
+            JAXBContext context = JAXBContext.newInstance(Cal.class);
+            c = (Cal) context.createUnmarshaller().unmarshal(stream);
+        } catch (JAXBException | IOException ex) {
             System.out.println(ex);
-            cal = new Cal();
         }
-        exec = Executors.newSingleThreadExecutor();
-        exec.execute(new AutoSave(cal, out, 5));     
+        Executors.newSingleThreadExecutor().execute(new AutoSave(c, path, 5));
+        this.cal = c == null ? new Cal() : c;
     }
-
-    private Cal readCal() throws JAXBException, FileNotFoundException {
-        JAXBContext context = JAXBContext.newInstance(Cal.class);
-        return (Cal) context.createUnmarshaller().unmarshal(in);
-    }
-
 
     @Override
     public boolean executeTask(String taskId) {
         Task task = getTask(taskId);
 
-        //If the task's conditions aren't executed or some conditions still are required we don't do anything.
-        //If the conditions are executed and no are required, we set the task as executed and not required. 
-        for (String c : task.conditionsAsList()) {
-            if (!getTask(c).isExecuted() || getTask(c).isRequired()) {
+        if(task == null) {
+            return false;
+        }
+        
+        // Check if all conditions are satisfied...
+        for (String cid : task.conditionsAsList()) {
+            Task condition = getTask(cid);
+            if (!condition.isExecuted() || condition.isRequired()) {
+                // ..if not, the task can't be executed.
                 return false;
-            } else {
-                synchronized (task) {
-                    task.setExecuted(true);
-                    task.setRequired(false);
-                }
             }
         }
 
-        //We set the response tasks as required
-        for (String r : task.responsesAsList()) {
-            Task t = getTask(r);
-            synchronized (t) {
-                t.setRequired(true);
+        // Execute the task.
+        synchronized (task) {
+            task.setExecuted(true);
+            task.setRequired(false);
+        }
+
+        // Update the response tasks.
+        for (String rid : task.responsesAsList()) {
+            Task response = getTask(rid);
+            synchronized (response) {
+                response.setRequired(true);
             }
         }
 
@@ -85,12 +79,25 @@ public class LocalManager implements TaskManager {
         return cal.users;
     }
 
+    /**
+     * Gets all tasks attended by a certain user.
+     * If null or an empty string is used, all tasks are returned.
+     *
+     * @param attendantId The id of the user.
+     * @return The attendants tasks.
+     */
     @Override
     public Tasks getAttendantTasks(String attendantId) {
+        if(attendantId == null || attendantId.trim().isEmpty()) {
+            return cal.tasks;
+        }
+        
         List<Task> matches = new ArrayList<>();
         for (Task t : cal.tasks) {
-            if (t.attendantsAsList().contains(attendantId)) {
-                matches.add(t);
+            for(String attendant : t.attendantsAsList()) {
+                if(attendant.equalsIgnoreCase(attendantId)) {
+                    matches.add(t);
+                }
             }
         }
 
@@ -100,7 +107,7 @@ public class LocalManager implements TaskManager {
     @Override
     public Task getTask(String taskId) {
         for (Task t : cal.tasks) {
-            if (t.id.equals(taskId)) {
+            if (t.id.equalsIgnoreCase(taskId)) {
                 return t;
             }
         }

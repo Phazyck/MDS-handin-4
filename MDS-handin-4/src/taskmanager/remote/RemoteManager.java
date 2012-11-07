@@ -38,7 +38,7 @@ public class RemoteManager implements TaskManager {
     @Override
     public boolean executeTask(String taskId) {
         String reply = getReply(new Envelope("execute", taskId));
-        return Boolean.getBoolean(reply);
+        return reply.trim().equalsIgnoreCase("true");
     }
 
     @Override

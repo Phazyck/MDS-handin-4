@@ -2,8 +2,6 @@ package remote.udp.string;
 
 import java.io.*;
 import java.net.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import remote.Receiver;
 import remote.Transmitter;
 
@@ -69,12 +67,13 @@ public class UdpStringTransmitter implements Transmitter<String> {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+        System.out.println("Message sent: " + message);
     }
 
     @Override
     public Receiver<String> getReceiver() {
         try {
-            return new UdpStringReceiver(socket.getPort(), 255);
+            return new UdpStringReceiver(socket);
         } catch (SocketException ex) {
             System.out.println(ex);
             return null;            

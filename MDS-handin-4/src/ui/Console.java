@@ -23,9 +23,9 @@ public class Console implements Runnable {
     public Console() throws UnknownHostException, SocketException {
         input = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
-            out("Which kind of TaskManager would you like to test?");
-            out(" - [local]Manager");
-            out(" - [remote]Manager");
+            System.out.println("Which kind of TaskManager would you like to test?");
+            System.out.println(" - [local]Manager");
+            System.out.println(" - [remote]Manager");
             switch (in().toLowerCase()) {
                 case "local":
                     manager = new LocalManager();
@@ -45,12 +45,12 @@ public class Console implements Runnable {
     @Override
     public void run() {
         while (true) {
-            out("Would you like to:");
-            out(" - [execute] a task?");
-            out(" - list all [users]?");
-            out(" - list all [tasks] attended by a given user?");
-            out(" - display all details about a given [task]?");
-            out(" - [exit]?");
+            System.out.println("What would you like to do?");
+            System.out.println(" - [execute] a task.");
+            System.out.println(" - list all [users].");
+            System.out.println(" - list all [tasks] attended by a given user.");
+            System.out.println(" - display all details about a given [task].");
+            System.out.println(" - [exit]");
             switch (in().toLowerCase()) {
                 case "execute":
                     executeTask();
@@ -67,7 +67,7 @@ public class Console implements Runnable {
                 default:
                     wrongInput();
             }
-            System.out.println("\n");
+            System.out.println("==================================================");
         }
     }
 
@@ -75,12 +75,12 @@ public class Console implements Runnable {
      * Starts the [execute] dialog.
      */
     private void executeTask() {
-        out("What is the id of the task you want to execute?");
+        System.out.println("What is the id of the task you want to execute?");
         if(manager.executeTask(in())) {
-            out("Task executed.");
+            System.out.println("Task executed.");
         } else {
-            out("Task couldn't be executed.");
-            out("Some conditions might not have been fulfilled.");
+            System.out.println("Task couldn't be executed.");
+            System.out.println("Some conditions might not have been fulfilled.");
         }
     }
 
@@ -88,9 +88,9 @@ public class Console implements Runnable {
      * Starts the [users] dialog.
      */
     private void listUsers() {
-        out("Listing all users:");
+        System.out.println("Listing all users:");
         for (User u : manager.getUsers()) {
-            out("  " + u.name);
+            System.out.println("  " + u.name);
         }
     }
 
@@ -98,15 +98,16 @@ public class Console implements Runnable {
      * Starts the [tasks] dialog.
      */
     private void listTasks() {
-        out("What is the id of the attendant whose tasks you want to list?");
+        System.out.println("What is the id of the attendant whose tasks you want to list?");
         String attendantId = in();
         Tasks tasks = manager.getAttendantTasks(attendantId);
 
         if (tasks.size() == 0) {
-            out(attendantId + " isn't attending any tasks.");
+            System.out.println(attendantId + " isn't attending any tasks.");
         } else {
+            System.out.println("Listing all attended tasks:");
             for (Task t : tasks) {
-                out("  " + t.id);
+                System.out.println("  " + t.id);
             }
         }
     }
@@ -115,30 +116,30 @@ public class Console implements Runnable {
      * Starts the [task] dialog.
      */
     private void displayTask() {
-        out("What is the id of the task you want to display?");
+        System.out.println("What is the id of the task you want to display?");
 
         Task task = manager.getTask(in());
 
         if (task != null) {
-            out("Displaying " + task.id + ":");
-            out("name:");
-            out("  " + task.name);
-            out("date:");
-            out("  " + task.date);
-            out("status:");
-            out("  " + task.status);
-            out("required:");
-            out("  " + task.required);
-            out("description:");
-            out("  " + task.description);
-            out("attendants:");
-            out("  " + task.attendants);
-            out("conditions:");
-            out("  " + task.conditions);
-            out("responses:");
-            out("  " + task.responses);
+            System.out.println("Displaying " + task.id.trim() + ":");
+            System.out.println("name:");
+            System.out.println("  " + task.name.trim());
+            System.out.println("date:");
+            System.out.println("  " + task.date.trim());
+            System.out.println("status:");
+            System.out.println("  " + task.status.trim());
+            System.out.println("required:");
+            System.out.println("  " + task.required.trim());
+            System.out.println("description:");
+            System.out.println("  " + task.description.trim());
+            System.out.println("attendants:");
+            System.out.println("  " + task.attendants.trim());
+            System.out.println("conditions:");
+            System.out.println("  " + task.conditions.trim());
+            System.out.println("responses:");
+            System.out.println("  " + task.responses.trim());
         } else {
-            out("No such task.");
+            System.out.println("No such task.");
         }
     }
 
@@ -153,7 +154,7 @@ public class Console implements Runnable {
         try {
             String line = input.readLine();
             if (line.equalsIgnoreCase("exit")) {
-                out("Bye-bye!");
+                System.out.println("Bye-bye!");
                 System.exit(0);
             }
             return line;
@@ -163,20 +164,11 @@ public class Console implements Runnable {
     }
 
     /**
-     * Prints out a string, using System.out.println(String x);
-     *
-     * @param x The string.
-     */
-    private void out(String x) {
-        System.out.println(x);
-    }
-
-    /**
      * A dialog which is started when unknown input is entered.
      */
     private void wrongInput() {
-        out("Please type one of the [options] displayed in square brackets.");
-        out("You can also [exit] when you're done.\n");
+        System.out.println("Please type one of the options displayed in square brackets.");
+        System.out.println("You can also [exit] when you're done.\n");
     }
 
     /**
