@@ -8,9 +8,8 @@
 
 __Here's a list of what still needs to done:__
 
- * __Test build:__ Test out the project.
  * __Write overview:__ Fill out the project overview.
- * __Produce Test Dumps:__ When testing out the project, copy some of the output and put it in the dump section.
+ * __Produce Test Dumps:__ Perform the tests and post the output in files named 'test_dump_X.txt'.
 
  
 ##Package Overview
@@ -56,19 +55,3 @@ __Here are some different test cases, and the console input needed, after the in
    * {tasks, rao}
 7. __Attempt to corrupt the data or produce some other kind of error:__ Execute two related tasks at the same time.
    * {execute, handin-01} - executed at the same time by different sources.
-
-##Test Dumps
-1. __Dump for test case 1:__
-   * _Insert dump here._
-2. __Dump for test case 2:__
-   * _Insert dump here._
-3. __Dump for test case 3:__
-   * _Insert dump here._
-4. __Dump for test case 4:__
-   * _Insert dump here._
-5. __Dump for test case 5:__
-   * _Insert dump here._
-6. __Dump for test case 6:__
-   * _Insert dump here._
-7. __Dump for test case 7:__
-   * _Insert dump here._
